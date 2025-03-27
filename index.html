@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>meret.xxox</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         body {
             background-color: pink;
@@ -57,10 +58,21 @@
     </div>
     
     <div class="fortune-box" id="fortuneBox">
-        <h2>🔮 Your Daily Fortune 🔮</h2>
+        <h2>🔮 Your Daily Y2K Fortune 🔮</h2>
         <button class="fortune-button" onclick="getFortune()">Get Your Fortune</button>
         <p class="fortune-result" id="fortuneResult"></p>
     </div>
+    
+    <h2>Tito's Cave AR Test</h2>
+    <model-viewer id="model-viewer" src="cube.glb"
+                  ios-src="cube.usdz"
+                  alt="Cube"
+                  ar
+                  auto-rotate
+                  camera-controls
+                  ar-modes="webxr scene-viewer quick-look" 
+                  environment-image="neutral">   
+    </model-viewer>
     
     <audio autoplay loop>
         <source src="https://www.myinstants.com/media/sounds/paris-hilton-stars-are-blind.mp3" type="audio/mp3">
@@ -91,6 +103,21 @@
             let randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
             document.getElementById("fortuneResult").innerText = randomFortune;
         }
+
+        // ARCore compatibility check
+        async function checkARCoreCompatibility() {
+            const modelViewer = document.getElementById('model-viewer');
+            if (navigator.xr) {
+                const isARCoreSupported = await navigator.xr.isSessionSupported('immersive-ar');
+                if (!isARCoreSupported) {
+                    modelViewer.removeAttribute('ar');
+                    modelViewer.removeAttribute('ar-modes');
+                    alert('Your device is not compatible with AR features. You can still view the 3D model.');
+                }
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', checkARCoreCompatibility);
     </script>
 </body>
 </html>
