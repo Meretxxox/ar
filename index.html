@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>meret.xxox</title>
+        <title>mein treppenhaus</title>
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
         <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
         <style>
@@ -16,9 +16,14 @@
                 overflow: hidden;
                 position: relative;
             }
+            h1 {
+                font-size: 36px;
+                text-shadow: 2px 2px 4px lightpink;
+            }
             .subtitle {
-                font-size: 14px;
+                font-size: 24px;
                 color: hotpink;
+                text-shadow: 1px 1px 3px lightpink;
                 margin-top: -10px;
             }
             model-viewer {
@@ -73,22 +78,22 @@
             }
             .phone-gif {
                 position: absolute;
-                bottom: 30px;
+                bottom: 10px;
                 width: 100px;
                 height: auto;
             }
             .phone-left {
-                left: 8%;
+                left: 10%;
             }
             .phone-right {
-                right: 8%;
+                right: 10%;
             }
             .bottom-center {
                 position: absolute;
-                bottom: 20px;
+                bottom: -20px;
                 left: 50%;
                 transform: translateX(-50%);
-                width: 120px;
+                width: 100px;
                 height: auto;
             }
         </style>
@@ -97,9 +102,9 @@
         <h1>💖 Wilkommen in meinem Treppenhaus 💖</h1>
         <p class="subtitle">things are not always as they seem</p>
         
-        <model-viewer id="model-viewer" src="cube.glb"
-                      ios-src="cube.usdz"
-                      alt="cube"
+        <model-viewer id="model-viewer" src="treppenhaus-armgart.glb"
+                      ios-src="treppenhaus-armgart.usdz"
+                      alt="Treppenhaus"
                       ar
                       auto-rotate
                       camera-controls
