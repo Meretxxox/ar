@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meret.xxox</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: color: pink;
+            color: hotpink;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            cursor: url('https://cur.cursors-4u.net/nature/nat-11/nat1076.cur'), auto;
+        }
+        .loading-container {
+            width: 300px;
+            margin: 50px auto;
+            background: white;
+            padding: 10px;
+            border: 3px dashed hotpink;
+        }
+        .loading-bar {
+            width: 0%;
+            height: 20px;
+            background: hotpink;
+        }
+        .spider { 
+            width: 50px;
+            position: absolute;
+            animation: dropSpider 3s infinite alternate;
+        }
+        @keyframes dropSpider {
+            from { top: -50px; }
+            to { top: 100px; }
+        }
+        .fortune-box {
+            margin: 20px auto;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid hotpink;
+            width: 60%;
+        }
+        .fortune-button {
+            background: hotpink;
+            color: white;
+            padding: 10px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .fortune-result {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>💖 Welcome My Page! 💖</h1>
+    
+    <div class="loading-container">
+        <p>Loading…</p>
+        <div class="loading-bar" id="loadingBar"></div>
+    </div>
+    
+    <img src="https://i.imgur.com/k7TjxuI.png" class="spider" style="left: 30%;">
+    <img src="https://i.imgur.com/k7TjxuI.png" class="spider" style="right: 30%;">
+    
+    <div class="fortune-box">
+        <h2>🔮 Your Daily Fortune 🔮</h2>
+        <button class="fortune-button" onclick="getFortune()">Get Your Fortune</button>
+        <p class="fortune-result" id="fortuneResult"></p>
+    </div>
+    
+    <audio autoplay loop>
+        <source src="https://www.myinstants.com/media/sounds/paris-hilton-stars-are-blind.mp3" type="audio/mp3">
+    </audio>
+    
+    <script>
+        // Fake loading bar effect
+        let load = 0;
+        let interval = setInterval(() => {
+            load += 5;
+            document.getElementById("loadingBar").style.width = load + "%";
+            if (load >= 100) clearInterval(interval);
+        }, 300);
+
+        // Y2K fortune teller
+        function getFortune() {
+            let fortunes = [
+                "✨ You are the main character today! ✨",
+                "💖 Someone is crushing on you… 👀",
+                "🕷️ Spiders bring luck—expect something good!",
+                "💅 You’re serving LOOKS today, queen!",
+                "🛜 Your Wi-Fi aura is extra strong today, use it wisely!"
+            ];
+            let randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+            document.getElementById("fortuneResult").innerText = randomFortune;
+        }
+    </script>
+</body>
+</html>
