@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
-            background: url('https://media.giphy.com/media/l3vR0hXfTrsZ1xjDi/giphy.gif'); /* Soft blue glitter */
+            background-color: lightblue;
             color: hotpink;
             font-family: 'Comic Sans MS', cursive, sans-serif;
             text-align: center;
@@ -24,15 +24,6 @@
             width: 0%;
             height: 20px;
             background: hotpink;
-        }
-        .spider { 
-            width: 50px;
-            position: absolute;
-            animation: dropSpider 3s infinite alternate;
-        }
-        @keyframes dropSpider {
-            from { top: -50px; }
-            to { top: 100px; }
         }
         .fortune-box {
             margin: 20px auto;
@@ -63,9 +54,6 @@
         <div class="loading-bar" id="loadingBar"></div>
     </div>
     
-    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Spider_icon.svg" class="spider" style="left: 30%;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Spider_icon.svg" class="spider" style="right: 30%;">
-    
     <div class="fortune-box">
         <h2>🔮 Your Daily Y2K Fortune 🔮</h2>
         <button class="fortune-button" onclick="getFortune()">Get Your Fortune</button>
@@ -90,7 +78,7 @@
             let fortunes = [
                 "✨ You are the main character today! ✨",
                 "💖 Someone is crushing on you… 👀",
-                "🕷️ Spiders bring luck—expect something good!",
+                "🌟 Expect a surprise message soon!",
                 "💅 You’re serving LOOKS today, queen!",
                 "🛜 Your Wi-Fi aura is extra strong today, use it wisely!"
             ];
