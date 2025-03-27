@@ -1,123 +1,166 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>meret.xxox</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <style>
-        body {
-            background-color: pink;
-            color: hotpink;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            text-align: center;
-            cursor: url('https://cur.cursors-4u.net/nature/nat-11/nat1076.cur'), auto;
-            overflow: hidden;
-        }
-        .loading-container {
-            width: 300px;
-            margin: 50px auto;
-            background: white;
-            padding: 10px;
-            border: 3px dashed hotpink;
-        }
-        .loading-bar {
-            width: 0%;
-            height: 20px;
-            background: hotpink;
-        }
-        .fortune-box {
-            margin: 20px auto;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 2px solid hotpink;
-            width: 60%;
-            display: none;
-        }
-        .fortune-button {
-            background: hotpink;
-            color: white;
-            padding: 10px;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .fortune-result {
-            font-size: 18px;
-            margin-top: 10px;
-        }
-    </style>
-</head>
-<body>
-    <h1>💖 Welcome to meret.xxox! 💖</h1>
+<DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>meret.xxox</title>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+        <style>
+            body {
+                background: pink url('background.gif') repeat;
+                color: hotpink;
+                font-family: 'Comic Sans MS', cursive, sans-serif;
+                text-align: center;
+                cursor: url('https://cur.cursors-4u.net/nature/nat-11/nat1076.cur'), auto;
+                overflow: hidden;
+                position: relative;
+            }
+            .subtitle {
+                font-size: 14px;
+                color: hotpink;
+                margin-top: -10px;
+            }
+            model-viewer {
+                display: block;
+                margin: 20px auto;
+            }
+            .loading-container, .fortune-box {
+                width: 50%;
+                margin: 60px auto;
+                background: white;
+                padding: 10px;
+                border: 3px dashed hotpink;
+            }
+            .loading-bar {
+                width: 0%;
+                height: 20px;
+                background: repeating-linear-gradient(45deg, pink 0%, pink 10px, lightpink 10px, lightpink 20px);
+                background-size: 40px 40px;
+                animation: moveStripes 1s linear infinite, loadProgress 3s forwards;
+            }
+            @keyframes moveStripes {
+                from { background-position: 0 0; }
+                to { background-position: 40px 0; }
+            }
+            @keyframes loadProgress {
+                from { width: 0%; }
+                to { width: 100%; }
+            }
+            .fortune-box {
+                display: none;
+                text-align: center;
+            }
+            .fortune-gif {
+                width: 80px;
+                height: auto;
+                display: block;
+                margin: 0 auto 10px;
+            }
+            .fortune-button {
+                background: hotpink;
+                color: white;
+                padding: 10px;
+                border: none;
+                font-size: 16px;
+                cursor: pointer;
+                display: block;
+                margin: 10px auto;
+            }
+            .fortune-result {
+                font-size: 18px;
+                margin-top: 10px;
+            }
+            .phone-gif {
+                position: absolute;
+                bottom: 30px;
+                width: 100px;
+                height: auto;
+            }
+            .phone-left {
+                left: 8%;
+            }
+            .phone-right {
+                right: 8%;
+            }
+            .bottom-center {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 120px;
+                height: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>💖 Wilkommen in meinem Treppenhaus 💖</h1>
+        <p class="subtitle">things are not always as they seem</p>
+        
+        <model-viewer id="model-viewer" src="cube.glb"
+                      ios-src="cube.usdz"
+                      alt="cube"
+                      ar
+                      auto-rotate
+                      camera-controls
+                      ar-modes="webxr scene-viewer quick-look" 
+                      environment-image="neutral">   
+        </model-viewer>
     
-    <div class="loading-container" id="loadingContainer">
-        <p>Loading…</p>
-        <div class="loading-bar" id="loadingBar"></div>
-    </div>
-    
-    <div class="fortune-box" id="fortuneBox">
-        <h2>🔮 Your Daily Fortune 🔮</h2>
-        <button class="fortune-button" onclick="getFortune()">Get Your Fortune</button>
-        <p class="fortune-result" id="fortuneResult"></p>
-    </div>
-    
-    <h2>Cube AR Test</h2>
-    <model-viewer id="model-viewer" src="cube.glb"
-                  ios-src="cube.usdz"
-                  alt="Cube"
-                  ar
-                  auto-rotate
-                  camera-controls
-                  ar-modes="webxr scene-viewer quick-look" 
-                  environment-image="neutral">   
-    </model-viewer>
-    
-    <audio autoplay loop>
-        <source src="https://www.myinstants.com/media/sounds/paris-hilton-stars-are-blind.mp3" type="audio/mp3">
-    </audio>
-    
-    <script>
-        // Fake loading bar effect
-        let load = 0;
-        let interval = setInterval(() => {
-            load += 5;
-            document.getElementById("loadingBar").style.width = load + "%";
-            if (load >= 100) {
-                clearInterval(interval);
+        <div class="loading-container" id="loadingContainer">
+            <p>Loading…</p>
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+        
+        <div class="fortune-box" id="fortuneBox">
+            <h2>🔮 Wie beginnt heute dein Tag? 🔮</h2>
+            <img src="eightball.gif" alt="Magic 8-Ball" class="fortune-gif">
+            <button class="fortune-button" onclick="getFortune()">Get Your Fortune</button>
+            <p class="fortune-result" id="fortuneResult"></p>
+        </div>
+        
+        <audio autoplay loop>
+            <source src="https://www.myinstants.com/media/sounds/paris-hilton-stars-are-blind.mp3" type="audio/mp3">
+        </audio>
+        
+        <img src="phone.gif" alt="Ringing Phone" class="phone-gif phone-left">
+        <img src="phone.gif" alt="Ringing Phone" class="phone-gif phone-right">
+        <img src="you-suck.gif" alt="You Suck" class="bottom-center">
+        
+        <script>
+            // Fake loading bar effect
+            setTimeout(() => {
                 document.getElementById("loadingContainer").style.display = "none";
                 document.getElementById("fortuneBox").style.display = "block";
+            }, 3000);
+    
+            // Y2K fortune teller
+            function getFortune() {
+                let fortunes = [
+                    "✨ You are the main character today! ✨",
+                    "💖 Someone is crushing on you… 👀",
+                    "🌟 Expect a surprise message soon!",
+                    "💅 You’re serving LOOKS today, queen!",
+                    "🛜 Your Wi-Fi aura is extra strong today, use it wisely!"
+                ];
+                let randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+                document.getElementById("fortuneResult").innerText = randomFortune;
             }
-        }, 300);
-
-        // Y2K fortune teller
-        function getFortune() {
-            let fortunes = [
-                "✨ You are the main character today! ✨",
-                "💖 Someone is crushing on you… 👀",
-                "🌟 Expect a surprise message soon!",
-                "💅 You’re serving LOOKS today, queen!",
-                "🛜 Your Wi-Fi aura is extra strong today, use it wisely!"
-            ];
-            let randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-            document.getElementById("fortuneResult").innerText = randomFortune;
-        }
-
-        // ARCore compatibility check
-        async function checkARCoreCompatibility() {
-            const modelViewer = document.getElementById('model-viewer');
-            if (navigator.xr) {
-                const isARCoreSupported = await navigator.xr.isSessionSupported('immersive-ar');
-                if (!isARCoreSupported) {
-                    modelViewer.removeAttribute('ar');
-                    modelViewer.removeAttribute('ar-modes');
-                    alert('Your device is not compatible with AR features. You can still view the 3D model.');
+    
+            // ARCore compatibility check
+            async function checkARCoreCompatibility() {
+                const modelViewer = document.getElementById('model-viewer');
+                if (navigator.xr) {
+                    const isARCoreSupported = await navigator.xr.isSessionSupported('immersive-ar');
+                    if (!isARCoreSupported) {
+                        modelViewer.removeAttribute('ar');
+                        modelViewer.removeAttribute('ar-modes');
+                        alert('Your device is not compatible with AR features. You can still view the 3D model.');
+                    }
                 }
             }
-        }
-        
-        document.addEventListener('DOMContentLoaded', checkARCoreCompatibility);
-    </script>
-</body>
-</html>
+            
+            document.addEventListener('DOMContentLoaded', checkARCoreCompatibility);
+        </script>
+    </body>
+    </html>
